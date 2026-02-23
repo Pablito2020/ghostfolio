@@ -7,7 +7,6 @@ import { Sector } from '@ghostfolio/common/interfaces/sector.interface';
 import { Injectable, Logger } from '@nestjs/common';
 import { SymbolProfile } from '@prisma/client';
 import { countries } from 'countries-list';
-import { Browser, impersonate } from 'node-libcurl-ja3';
 import { launch } from 'puppeteer';
 
 @Injectable()
@@ -64,9 +63,9 @@ export class TrackinsightDataEnhancerService implements DataEnhancerInterface {
       return JSON.parse(data);
     }
     if (useImpersonate) {
-      return TrackinsightDataEnhancerService.curly
-        .get(url)
-        .then((res) => res.data);
+      return fetch(url, { signal: AbortSignal.timeout(requestTimeout) }).then(
+        (res) => res.json()
+      );
     }
     return fetch(url, { signal: AbortSignal.timeout(requestTimeout) }).then(
       (res) => res.json()
