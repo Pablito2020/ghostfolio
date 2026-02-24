@@ -24,7 +24,6 @@ export class TrackinsightDataEnhancerService implements DataEnhancerInterface {
     'Health Care': 'Healthcare',
     'Information Technology': 'Technology'
   };
-  private static curly = impersonate(Browser.Chrome);
 
   public constructor(
     private readonly configurationService: ConfigurationService
